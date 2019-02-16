@@ -49,10 +49,10 @@ function spotifySong() {
         }
     
         data.tracks.items.forEach(function (element) {
-          console.log("Artists: " + element.artists);
+          console.log("Artists: " + element.artists[0].name);
           console.log("Song: " + element.name);
           console.log("Spotify Preview link: "+ element.preview_url);
-          console.log("Album: "+ element.album);
+          console.log("Album: "+ element.album.name);
         });
     });
 };    
@@ -132,7 +132,25 @@ function doWhatItSays() {
                break;
 
             case "spotify-this-song":
-               spotifySong(dataArr[1]);
+            
+                userQuery = dataArr[1]; 
+                console.log(userQuery);
+             
+                spotify.search({type: 'track', query: userQuery, limit: 1 }, function(err, data){
+                 
+                if (err) {
+                   return console.log(err);
+                 }
+             
+                data.tracks.items.forEach(function (element) {
+                   console.log("Artists: " + element.artists[0].name);
+                   console.log("Song: " + element.name);
+                   console.log("Spotify Preview link: "+ element.preview_url);
+                   console.log("Album: "+ element.album.name);
+                 });
+            
+              });    
+               
                break;
         }
     }  
